@@ -3,7 +3,7 @@ const fs = require("fs");
 const axios = require("axios");
 const electron = require ("electron-html-to");
 const open = require ("open");
-const generateMarkdown = require("./utils/generateMarkdown.js");
+const genMarkdown = require("./utils/generateMarkdown.js");
 const api = require("./utils/api.js");
 const util = require("util");
 require('dotenv').config();
@@ -78,7 +78,8 @@ function promptUser() {
           name: "tests",
           message: "What tests do you run?"
         },
-  ];
+  ]
+};
 
 const returnUsername = async (username) => {
   const gitReturn = await api.getUser(questions.username);
