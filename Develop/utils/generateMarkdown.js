@@ -1,29 +1,48 @@
 
 
+
 function generateMarkdown(data) {
   return `
 # ${data.title}
+#### ${data.description}
 
-##Descriptions ${answer.description}
+## By - 
+${data.username}
 
-##Table of Contents ${answer.tableOfContents}
+## Table of Contents
 
-The README will be populated with the following:
+#### Installation 
+#### Usage 
+#### Credits 
+#### License 
 
-### At least one badge
-### Project title : ${answer.title}
-### Description : ${answer.description}
-### Table of Contents ${answer.stable}
-### Installation ${answer.installation}
-### Usage ${answer.usage}
-### License ${answer.license}
-### Contributing ${answer.contributing}
-### Tests ${answer.testing}
-### Questions
-  * User GitHub profile picture $data.
-  * User GitHub email
+#### At least one badge
+// badge NEEDED HERE
+
+## Installation
+${data.installation}
+## Usage
+${data.usage} 
+## What helped me accomplish the project:
+### Contributing
+- ${data.contributors}
+### Licenses
+- ${data.license}
+
+## Tests 
+${data.tests}
+## Questions? Contact below:
+* Github username: ${data.username}
+* Located: ${data.location}
+* User GitHub email: ${data.email}
+  ![userpicture](${data.picture})
+  
+
 `;
 };
 
 
+
 module.exports = generateMarkdown;
+
+

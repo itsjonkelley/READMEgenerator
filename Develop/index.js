@@ -13,23 +13,11 @@ require('dotenv').config();
 //import
 //api
 const GHTOKEN = process.env.GHTOKEN
-// * At least one badge
-// * Project title 
-// * Description
-// * Table of Contents
-// * Installation
-// * Usage
-// * License
-// * Contributing
-// * Tests
-// * Questions
-//   * User GitHub profile picture
-//   * User GitHub email
+
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
 
-function promptUser() {
   const questions = [
   // return inquirer.prompt([
         {
@@ -39,7 +27,7 @@ function promptUser() {
         },
         {
           type: "input",
-          name: "projectTitle",
+          name: "title",
           message: "What is the title of your project?"
         },
         {
@@ -48,22 +36,22 @@ function promptUser() {
           message: "Provide a description of the project."
         },
         {
-          type: "confirm",
-          name: "tableOfContents",
-          message: "Need a table of contents?"
+          type: "input",
+          name: "email",
+          message: "What is your email you would like to use?"
         },
         {
           type: "input",
           name: "installation",
-          message: "What do you need to install the project?"
+          message: "What packages are needed to be installed to run the application?"
         },
         {
           type: "input",
           name: "usage",
-          message: "How will you use the project?"
+          message: "How will you use the application?"
         },
         {
-          type: "input",
+          type: "list",
           name: "license",
           message: "What license do you need?",
           choices: ['MIT License','Apache License', 'GPL License','Unlicensed']
@@ -76,64 +64,46 @@ function promptUser() {
         {
           type: "input",
           name: "tests",
-          message: "What tests do you run?"
+          message: "Were tests run?"
         },
   ]
-};
 
-const returnUsername = async (username) => {
+// const returnUsername = async (username) => {
+// }
+
+
+
+
+
+
+
+async function init() {
+  let input = await inquirer.prompt(questions);
+  console.log(input)
   const gitReturn = await api.getUser(questions.username);
-}
-
-
-
-
-function writeToFile(genMarkdown) {
-  fs.writeFile("README.md", genMarkdown, function (err) {
-    if (err) {
-      throw err;
-    }
-    console.log("Successfully generated README.md.")
-  });
-}
-
-
-
-// promptUser()
-//   .then(function(answers) {
-  //     const html = generateHTML(answers);
-  
-  //     return writeFileAsync("README.md", md);
-  //   })
-  //   .then(function() {
-    //     console.log("Successfully wrote to index.html");
-    //   })
-    //   .catch(function(err) {
-      //     console.log(err);
-      //   });
-      
-      async function init() {
-        try{
-        let answers = await inquirer.prompt()
         let dataObj = {
-          projectTitle : answers.projectTitle,
-          description : answers.description,
-          tableOfContents : answers.tableOfContents,
-          installation : answers.installation,
-          usage : answers.usage,
-          message : answers.license,
-          contributors : answers.contributors,
-          tests : answers.tests,
+          username : input.username,
+          email : input.email,
+          title : input.title,
+          description : input.description,
+          installation : input.installation,
+          usage : input.usage,
+          license : input.license,
+          contributors : input.contributors,
+          tests : input.tests,
+          picture : gitReturn.data.avatar_url,
+          location : gitReturn.data.location,
           
         }
+        console.log(dataObj)
+        const markdown = genMarkdown(dataObj)
+        console.log(markdown)
+        fs.writeFile('README.md', markdown, (err) => {
+        if (err) throw err;
+        console.log('Successfully generated README.md.');
+    });
+  }
 
-        }
-        catch (error)
-        {
-          console.log(error);
-        }
-        
-      }
+      
       
       init();
-      

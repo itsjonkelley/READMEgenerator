@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 require('dotenv').config();
 const GHTOKEN = process.env.GHTOKEN;
+const axios = require("axios");
 
 const api = {
   getUser(username) {
